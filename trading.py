@@ -2,40 +2,42 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 
-#create the 'target' for the dataset
-# assigns value of 1 if a givens day data resulted in the next day
-#closing at a higher price
-def create_target(data):
-    rows = data.shape[0]
-    reversed_data = np.flipud(data)
-    result = np.zeros(rows)
-    first_close = 193.15
-    prev = first_close
-    i=0
-    for x in reversed_data:
-        if x[3]>prev:
-            result[i]=1
-        else:
-            result[i]=0
-        prev = x[3]
-        i=i+1
+class Trade:
 
-    return result
+    def __init__(self,fileName):
+        #knn,X_test,X_train,y_test,y_train,target,data
+        self.data = np.loadtxt(fileName,delimiter=",",skiprows=1,usecols=(1,2,3,4,5))
+        self.knn = KNeighborsClassifier(n_neighbors=3)
+        self.generate_target()
 
-#stock price data for Tesla (TSLA)
-#identify datatype so each row is interpreted as an element of the  arrayy
-#skip first row, and use cols 1toN to avoid the date column
-tsla_data = np.loadtxt('tsla.csv', delimiter=",",skiprows=1,usecols=(1,2,3,4,5))
+    #generate target data to be used by knn classifier
+    def generate_target(self):
+        self.target = np.zeros(self.data.shape[0])
+        reversed_data = np.flipud(self.data)
 
-#X_train, X_test, y_train, y_test = train_test_split()
-#knn = KNeighborsClassifier(neighbors=3)
+        prev = 193.15
+        i =0
 
-target = create_target(tsla_data)
+        for x in reversed_data:
+            # x corresponds to each individual tuple in reversed_data,
+            #the '3' corresponds to the closing price
+            if x[3]>prev:
+                self.target[i]=1
+            else:
+                self.target[i]=0
+            prev = x[3]
+            i = i+1
 
-knn = KNeighborsClassifier(n_neighbors=1)
-X_train, X_test, y_train, y_test = train_test_split(tsla_data,target,random_state=0)
-knn.fit(X_train,y_train)
+    def train_model(self):
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.data,self.target)
+        self.knn.fit(self.X_train,self.y_train)
 
-prediction_set = knn.predict(X_test)
-print("Test Score: {}".format(prediction_set))
-#print("Test Score: {:.2f}".format(knn.score(X_train,y_train)))
+    def predict_next_day(self,data):
+        self.knn.predict(data)
+
+    def get_score(self):
+        print("Test Score: {}".format(self.knn.score(self.X_train,self.y_train)))
+
+t = Trade('tsla.csv')
+t.train_model()
+t.get_score()
