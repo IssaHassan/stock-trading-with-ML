@@ -28,6 +28,8 @@ class Trade:
             prev = x[3]
             i = i+1
 
+        self.target = self.target[::-1]
+
     def train_model(self):
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.data,self.target)
         self.knn.fit(self.X_train,self.y_train)
@@ -36,8 +38,14 @@ class Trade:
         self.knn.predict(data)
 
     def get_score(self):
-        print("Test Score: {}".format(self.knn.score(self.X_train,self.y_train)))
+        print("Test Score: {}".format(self.knn.score(self.X_test,self.y_test)))
 
-t = Trade('tsla.csv')
-t.train_model()
-t.get_score()
+
+
+def main():
+    t = Trade('tsla.csv')
+    t.train_model()
+    t.get_score()
+
+if __name__ == "__main__":
+    main()
