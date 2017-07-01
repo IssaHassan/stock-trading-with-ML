@@ -31,7 +31,10 @@ class Trade:
         self.target = self.target[::-1]
 
     def train_model(self):
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.data,self.target)
+        # random_state=0 is to give a fixed seed for the pseudorandom generator for
+        # getting the same output from the function everytime we run it
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.data,
+            self.target,random_state=0)
         self.knn.fit(self.X_train,self.y_train)
 
     def predict_next_day(self,data):
