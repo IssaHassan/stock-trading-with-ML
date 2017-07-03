@@ -2,11 +2,12 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 
-class Trade:
+class Model:
 
     def __init__(self,fileName):
         #knn,X_test,X_train,y_test,y_train,target,data
-        self.data = np.loadtxt(fileName,delimiter=",",skiprows=1,usecols=(1,2,3,4,5))
+        #used rows high-price, low-price, open-price and close-price. Ommiting volume and date.
+        self.data = np.loadtxt(fileName,delimiter=",",skiprows=1,usecols=(1,2,3,4))
         self.knn = KNeighborsClassifier(n_neighbors=3)
         self.generate_target()
 
@@ -16,7 +17,7 @@ class Trade:
         reversed_data = np.flipud(self.data)
 
         prev = 193.15
-        i =0
+        i = 0
 
         for x in reversed_data:
             # x corresponds to each individual tuple in reversed_data,
@@ -33,6 +34,8 @@ class Trade:
     def train_model(self):
         # random_state=0 is to give a fixed seed for the pseudorandom generator for
         # getting the same output from the function everytime we run it
+        # this means the fixed seed causes the training set and test set to be the
+        # same everytime we run the program
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.data,
             self.target,random_state=0)
         self.knn.fit(self.X_train,self.y_train)
@@ -46,9 +49,9 @@ class Trade:
 
 
 def main():
-    t = Trade('tsla.csv')
-    t.train_model()
-    t.get_score()
+    m = Model('tsla.csv')
+    m.train_model()
+    m.get_score()
 
 if __name__ == "__main__":
     main()
