@@ -8,8 +8,9 @@ class Model:
         #knn,X_test,X_train,y_test,y_train,target,data
         #used rows high-price, low-price, open-price and close-price. Ommiting volume and date.
         self.data = np.loadtxt(fileName,delimiter=",",skiprows=1,usecols=(1,2,3,4))
-        self.knn = KNeighborsClassifier(n_neighbors=3)
+        self.knn = KNeighborsClassifier(n_neighbors=4)
         self.generate_target()
+        self.train_model()
 
     #generate target data to be used by knn classifier
     def generate_target(self):
@@ -30,6 +31,7 @@ class Model:
             prev = x[3]
             i = i+1
 
+        #reverse target so they match the data
         self.target = self.target[::-1]
 
     def train_model(self):
@@ -42,11 +44,11 @@ class Model:
         self.knn.fit(self.X_train,self.y_train)
 
     def predict_next_day(self,data):
-        self.knn.predict(data)
+        return self.knn.predict(data)
 
     def get_score(self):
         print("Test Score: {}".format(self.knn.score(self.X_test,self.y_test)))
-
+"""
 
 
 def main():
@@ -56,3 +58,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+"""
