@@ -13,9 +13,10 @@ class Model:
 
     #generate target data to be used by knn classifier
     def generate_target(self):
+        #set size of target array to same number of elements of data matrix
         self.target = np.zeros(self.data.shape[0])
         reversed_data = np.flipud(self.data)
-
+        #this number is only correct for tsla.csv file
         prev = 193.15
         i = 0
 
