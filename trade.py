@@ -42,7 +42,5 @@ def main():
     #if(todays_pred>0) market_buy(account_id,)
 
 
-
-
 if __name__ == "__main__":
     main()

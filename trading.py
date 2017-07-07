@@ -8,7 +8,7 @@ class Model:
         #knn,X_test,X_train,y_test,y_train,target,data
         #used rows high-price, low-price, open-price and close-price. Ommiting volume and date.
         self.data = np.loadtxt(fileName,delimiter=",",skiprows=1,usecols=(1,2,3,4))
-        self.knn = KNeighborsClassifier(n_neighbors=4)
+        self.knn = KNeighborsClassifier(n_neighbors=3)
         self.generate_target()
         self.train_model()
 
@@ -47,15 +47,17 @@ class Model:
         return self.knn.predict(data)
 
     def get_score(self):
-        print("Test Score: {}".format(self.knn.score(self.X_test,self.y_test)))
-"""
+        print("Training Score: {:.2f}".format(self.knn.score(self.X_train,self.y_train)))
+
+        print("Test Score: {:.2f}".format(self.knn.score(self.X_test,self.y_test)))
+
+
 
 
 def main():
-    m = Model('tsla.csv')
+    m = Model('sp5002.csv')
     m.train_model()
     m.get_score()
 
 if __name__ == "__main__":
     main()
-"""
