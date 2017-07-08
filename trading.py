@@ -8,7 +8,7 @@ class Model:
         #knn,X_test,X_train,y_test,y_train,target,data
         #used rows high-price, low-price, open-price and close-price. Ommiting volume and date.
         self.data = np.loadtxt(fileName,delimiter=",",skiprows=1,usecols=(1,2,3,4))
-        self.knn = KNeighborsClassifier(n_neighbors=3)
+        self.knn = KNeighborsClassifier(n_neighbors=8)
         self.generate_target()
         self.train_model()
 
