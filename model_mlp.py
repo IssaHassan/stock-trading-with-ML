@@ -5,7 +5,7 @@ class Model_MLP(Model):
 
     def __init__(self,file_name):
         super(Model_MLP,self).__init__(file_name)
-        self.mlp = MLPClassifier(solver='lbfgs', random_state=0)
+        self.mlp = MLPClassifier(solver='lbfgs', activation='tanh', random_state=0, hidden_layer_sizes=[100,100,100])
 
         #self.train_model()
 
@@ -21,7 +21,7 @@ class Model_MLP(Model):
         print("Test Score: {:.2f}".format(self.mlp.score(self.X_test,self.y_test)))
 
 
-
+"""
 def main():
     m_mlp = Model_MLP('sp5002.csv')
     m_mlp.train_model()
@@ -29,3 +29,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+"""

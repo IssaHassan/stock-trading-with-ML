@@ -25,10 +25,11 @@ class Model(metaclass=ABCMeta):
         self.target = np.zeros(self.data.shape[0])
         reversed_data = np.flipud(self.data)
         #this number is only correct for tsla.csv file
-        prev = 193.15
+        #prev = 193.15
+        prev = 1974
         i = 0
 
-        for x in reversed_data:
+        for x in self.data:
             # x corresponds to each individual tuple in reversed_data,
             #the '3' corresponds to the closing price
             if x[3]>prev:
@@ -39,7 +40,7 @@ class Model(metaclass=ABCMeta):
             i = i+1
 
         #reverse target so they match the data
-        self.target = self.target[::-1]
+        #self.target = self.target[::-1]
 
     def generate_target2(self,stock_data):
         target = np.zeros(stock_data.shape[0])
