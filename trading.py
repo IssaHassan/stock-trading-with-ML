@@ -10,14 +10,37 @@ class Model(metaclass=ABCMeta):
         #used rows high-price, low-price, open-price and close-price. Ommiting volume and date.
         self.data = np.loadtxt(fileName,delimiter=",",skiprows=1,usecols=(1,2,3,4))
         self.generate_target()
+        self.generate_candle_data()
         #self.target = generate_target2(self.data)
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.data,
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.candle_data,
                     self.target,random_state=0)
 
 
         #self.knn = KNeighborsClassifier(n_neighbors=8)
         #self.generate_target()
         #self.train_model()
+
+##Note having the data in candlestick format, cause knn to give a much better result, but keeps the same result for mlp.
+    def generate_candle_data(self):
+        #initialize with the same number of rows, as self.data, but only 3 cols/features
+        self.candle_data = np.zeros([self.data.shape[0],3])
+        i=0
+        for tuple in self.data:
+
+            total = tuple[1]-tuple[2]
+            high = tuple[1]
+            low = tuple[2]
+            the_open = tuple[0]
+            close = tuple[3]
+
+            self.candle_data[i][0] = (close - the_open)/total
+            self.candle_data[i][1] = (high - close)/total
+            self.candle_data[i][2] = (low-the_open)/total
+
+            i = i+1
+
+        #print(self.candle_data[:5])
+
 
     #generate target data to be used by knn classifier
     def generate_target(self):

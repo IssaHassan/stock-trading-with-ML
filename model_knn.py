@@ -18,7 +18,7 @@ class Model_KNN(Model):
 
         print("Test Score: {:.2f}".format(self.knn.score(self.X_test,self.y_test)))
 
-"""
+
 
 def main():
     knn = Model_KNN('sp5002.csv')
@@ -27,4 +27,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-"""

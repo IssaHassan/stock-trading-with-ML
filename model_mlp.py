@@ -21,7 +21,7 @@ class Model_MLP(Model):
         print("Test Score: {:.2f}".format(self.mlp.score(self.X_test,self.y_test)))
 
 
-"""
+
 def main():
     m_mlp = Model_MLP('sp5002.csv')
     m_mlp.train_model()
@@ -29,4 +29,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-"""
