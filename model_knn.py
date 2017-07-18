@@ -13,6 +13,9 @@ class Model_KNN(Model):
     def predict_next_day(self,data):
         self.knn.predict(data)
 
+    def predict_test(self):
+        print(self.knn.predict(self.X_test[:500]))
+
     def get_score(self):
         print("Training Score: {:.2f}".format(self.knn.score(self.X_train,self.y_train)))
 
@@ -23,7 +26,9 @@ class Model_KNN(Model):
 def main():
     knn = Model_KNN('sp5002.csv')
     knn.train_model()
+    knn.predict_test()
     knn.get_score()
+
 
 if __name__ == "__main__":
     main()

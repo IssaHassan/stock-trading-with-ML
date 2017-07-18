@@ -9,10 +9,11 @@ class Model(metaclass=ABCMeta):
         #knn,X_test,X_train,y_test,y_train,target,data
         #used rows high-price, low-price, open-price and close-price. Ommiting volume and date.
         self.data = np.loadtxt(fileName,delimiter=",",skiprows=1,usecols=(1,2,3,4))
-        self.generate_target()
-        self.generate_candle_data()
+        #print(self.data[:5])
+        self.target = self.generate_target2(self.data)
+        #self.generate_candle_data()
         #self.target = generate_target2(self.data)
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.candle_data,
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.data,
                     self.target,random_state=0)
 
 
