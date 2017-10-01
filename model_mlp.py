@@ -8,6 +8,7 @@ import requests
 import oandapyV20
 import oandapyV20.endpoints.instruments as instruments
 
+#############################################THIS WILL BE MOVED#######################################################################
 client = oandapyV20.API(access_token='2f3a1f9ea2bfee5fe9d4c50d9f5ca8c8-c419e02e8c8f0382f897d9c1143ec1a0')
 account_id = '101-002-6020849-001'
 api = v20.Context(
@@ -15,7 +16,7 @@ api = v20.Context(
         '443',
         token='2f3a1f9ea2bfee5fe9d4c50d9f5ca8c8-c419e02e8c8f0382f897d9c1143ec1a0'
 )
-
+#######################################################################################################################################
 class Model_MLP(Model):
 
     def __init__(self,file_name,instr):
@@ -35,6 +36,8 @@ class Model_MLP(Model):
         print("Training Score: {:.2f}".format(self.mlp.score(self.X_train,self.y_train)))
 
         print("Test Score: {:.2f}".format(self.mlp.score(self.X_test,self.y_test)))
+
+#############################################THIS WILL BE MOVED#######################################################################
 
     def get_curr_price(self):
         latest_price_time = None
@@ -75,6 +78,8 @@ class Model_MLP(Model):
         #return r.response
         #print(r.response)
         return today_ohlc.reshape(1,-1)
+#######################################################################################################################################
+
 #use main just for testing.
 """
 def main():
