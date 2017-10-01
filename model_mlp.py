@@ -17,25 +17,27 @@ api = v20.Context(
         token='2f3a1f9ea2bfee5fe9d4c50d9f5ca8c8-c419e02e8c8f0382f897d9c1143ec1a0'
 )
 #######################################################################################################################################
-class Model_MLP(Model):
+class Model_MLP:
 
     def __init__(self,file_name,instr):
-        super(Model_MLP,self).__init__(file_name)
+        
+		#super(Model_MLP,self).__init__(file_name)
+		self.data = StockData()
         self.mlp = MLPClassifier(solver='lbfgs', activation='relu', random_state=0, hidden_layer_sizes=[100,100,100])
-        self.instr = instr
+        #self.instr = instr
         self.train_model()
         #self.time_frame = time_frame
 
     def train_model(self):
-        self.mlp.fit(self.X_train,self.y_train)
+        self.mlp.fit(self.data.X_train,self.data.y_train)
 
     def predict_next_day(self,data):
         return self.mlp.predict(data)
 
     def get_score(self):
-        print("Training Score: {:.2f}".format(self.mlp.score(self.X_train,self.y_train)))
+        print("Training Score: {:.2f}".format(self.mlp.score(self.data.X_train,self.data.y_train)))
 
-        print("Test Score: {:.2f}".format(self.mlp.score(self.X_test,self.y_test)))
+        print("Test Score: {:.2f}".format(self.mlp.score(self.data.X_test,self.data.y_test)))
 
 #############################################THIS WILL BE MOVED#######################################################################
 

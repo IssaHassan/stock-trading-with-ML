@@ -5,7 +5,7 @@ class StockData:
 	def __init__(self):
 
 		#input rows (1-4) high, low, open and close prices and omit rows 0,5,6
-        self.data = np.loadtxt(fileName,delimiter=",",skiprows=1,usecols=(1,2,3,4))
+        self.data = np.loadtxt(__filename,delimiter=",",skiprows=1,usecols=(1,2,3,4))
         #print(self.data[:5])
         self.target = self.generate_target2(self.data)
         
@@ -27,3 +27,5 @@ class StockData:
             i=i+1
 
         return target[::-1]
+		
+		
