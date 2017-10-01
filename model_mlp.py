@@ -1,8 +1,8 @@
-from trading import Model
+#from trading import Model
 from sklearn.neural_network import MLPClassifier
 from datetime import datetime
 import numpy as np
-
+from stock_data import StockData
 import v20
 import requests
 import oandapyV20
@@ -20,9 +20,9 @@ api = v20.Context(
 class Model_MLP:
 
     def __init__(self,file_name,instr):
-        
+
 		#super(Model_MLP,self).__init__(file_name)
-		self.data = StockData()
+        self.data = StockData()
         self.mlp = MLPClassifier(solver='lbfgs', activation='relu', random_state=0, hidden_layer_sizes=[100,100,100])
         #self.instr = instr
         self.train_model()
@@ -38,7 +38,7 @@ class Model_MLP:
         print("Training Score: {:.2f}".format(self.mlp.score(self.data.X_train,self.data.y_train)))
 
         print("Test Score: {:.2f}".format(self.mlp.score(self.data.X_test,self.data.y_test)))
-
+"""
 #############################################THIS WILL BE MOVED#######################################################################
 
     def get_curr_price(self):
@@ -81,7 +81,7 @@ class Model_MLP:
         #print(r.response)
         return today_ohlc.reshape(1,-1)
 #######################################################################################################################################
-
+"""
 #use main just for testing.
 """
 def main():

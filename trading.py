@@ -2,7 +2,7 @@ from abc import ABCMeta, abstractmethod
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
-
+"""
 class Model(metaclass=ABCMeta):
 
     def __init__(self,fileName):
@@ -80,7 +80,7 @@ class Model(metaclass=ABCMeta):
             i=i+1
 
         return target[::-1]
-"""
+
     @abstractmethod
     def train_model(self):
         # random_state=0 is to give a fixed seed for the pseudorandom generator for
@@ -98,9 +98,6 @@ class Model(metaclass=ABCMeta):
 
     #    print("Test Score: {:.2f}".format(self.knn.score(self.X_test,self.y_test)))
 
-"""
-"""
-
 def main():
     m = Model('sp5002.csv')
     m.train_model()
@@ -108,4 +105,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 """

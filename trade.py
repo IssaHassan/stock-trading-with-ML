@@ -1,5 +1,5 @@
 import numpy as np
-from trading import Model
+#from trading import Model
 import v20
 import requests
 # got this from: http://oanda-api-v20.readthedocs.io/en/latest/endpoints/instruments/instrumentlist.html
@@ -10,7 +10,8 @@ from model_mlp import Model_MLP
 import pandas_datareader as web
 import threading
 client = oandapyV20.API(access_token='2f3a1f9ea2bfee5fe9d4c50d9f5ca8c8-c419e02e8c8f0382f897d9c1143ec1a0')
-
+account_id = '101-002-6020849-001'
+#instr='SPX500_USD'
 api = v20.Context(
         'api-fxpractice.oanda.com',
         '443',
@@ -24,8 +25,8 @@ class Trade:
 
 
     def __init__(self, model):
-        #self.model = Model(fileName)
-        self.model = model
+	    self.model = model
+
 
     def market_buy(self, account_id, instr, unitSize):
         order_response = api.order.market(
@@ -54,6 +55,33 @@ class Trade:
             print("Position has NOT been closed")
         print(close_response.status)
 
+    def get_todays_candle(self):
+        #count is the number of previous candles that we return
+        # we need 2, because one represents the previous day, and one represents current time
+        #granularity is the time_frame
+
+        today_ohlc = np.zeros(4)
+
+        params = {
+            "count": 3,
+            "granularity": "H1"
+        }
+
+        #the following uses oandapyV20, credit belongs to the creator
+        #gets candlestick values such open high low close
+        r = instruments.InstrumentsCandles(instrument='SPX500_USD',params=params)
+        client.request(r)
+        result = r.response['candles'][1]['mid']
+
+        today_ohlc[0]=float(result['o'])/10
+        today_ohlc[1]=float(result['h'])/10
+        today_ohlc[2]=float(result['l'])/10
+        today_ohlc[3]=float(result['c'])/10
+        #return r.response
+        #print(r.response)
+        return today_ohlc.reshape(1,-1)
+
+
 
     def trade(self):
         #goes through the list of trades, once a day. And if there is a
@@ -61,7 +89,7 @@ class Trade:
         #otherwise it keeps looping.
         threading.Timer(60.0*60, self.trade).start() # called every minute
         #print("Hi")
-        next_day = self.model.get_todays_candle()
+        next_day = self.get_todays_candle()
         if self.model.predict_next_day(next_day) == 1:
             self.market_buy(self.account_id,self.commodity,self.trade_size)
         else:
