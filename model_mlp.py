@@ -20,9 +20,10 @@ class Model_MLP(Model):
 
     def __init__(self,file_name,instr):
         super(Model_MLP,self).__init__(file_name)
-        self.mlp = MLPClassifier(solver='lbfgs', activation='relu', random_state=0, hidden_layer_sizes=[100,100,100])
+        self.mlp = MLPClassifier(solver='lbfgs', activation='tanh', random_state=0, hidden_layer_sizes=[100,100,100])
         self.instr = instr
         self.train_model()
+        self.get_score()
         #self.time_frame = time_frame
 
     def train_model(self):
