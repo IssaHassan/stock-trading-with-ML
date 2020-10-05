@@ -9,18 +9,18 @@ import simplejson as json
 from model_mlp import Model_MLP
 import pandas_datareader as web
 import threading
-client = oandapyV20.API(access_token='2f3a1f9ea2bfee5fe9d4c50d9f5ca8c8-c419e02e8c8f0382f897d9c1143ec1a0')
+client = oandapyV20.API(access_token='c0dc1d24fed3f9278c5f5fe7151faa53-b022edabd5f826ef9bbe4c1b4eb3f57a')
 
 api = v20.Context(
         'api-fxpractice.oanda.com',
         '443',
-        token='2f3a1f9ea2bfee5fe9d4c50d9f5ca8c8-c419e02e8c8f0382f897d9c1143ec1a0'
+        token='c0dc1d24fed3f9278c5f5fe7151faa53-b022edabd5f826ef9bbe4c1b4eb3f57a'
 )
 
 class Trade:
-    account_id = '101-002-6020849-001'
+    account_id = '101-002-16669501-001'
     commodity = 'SPX500_USD'
-    trade_size = 56 #should change this value based on currr account size.
+    trade_size = 18 #should change this value based on currr account size.
 
 
     def __init__(self, model):
